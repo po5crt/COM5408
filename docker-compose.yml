@@ -1,73 +1,43 @@
-version: "3.9"
-
 services:
-
-  frontend:
-    build:
-      context: ./frontend
-    container_name: frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
+  database:
+   image: postgres:18-alphine
+   restart: always
+   environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: Bolton26
+    POSTGRES_DB: todo
+   volumes:
+     - ./db/init.sql:/docker-endtrypoint-initdb,d/init.sql
+     - pgdata:/var/lib/postgresql/database
+   ports:
+    - '5432:5432'
+  
   backend:
-    build:
-      context: ./backend
-    container_name: backend
+    build: ./backend
+    restart: always
     ports:
-      - "5000:5000"
+      - '5000:5000'
     environment:
       DB_HOST: database
       DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: appdb
+      DB_PASSWORD: Bolton26
+      DB_NAME: todo
+      DB_PORT: 5432
+      PORT: 5000
     depends_on:
       - database
-    networks:
-      - app-network
+    frontend:
+      build: ./web
+      restart: always
+      ports: 
+        - '3000:3000'
+      depends_on:
+        - backend
 
-  database:
-    image: postgres:16-alpine
-    container_name: database
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: appdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - app-network
-
-# Persistent database storage
 volumes:
-  postgres-data:
+  pgdata:      
+     
 
-# Shared network
-networks:
-  app-network:
-services:
-  databases:  
-  image:postgress:18-alphine
-  restart: always
-  enviroment:
-  POSTGRESS_USER: postgress
-  POSTGRESS_PASSWORD: Bolton26
-  POSTGRESS_DB: Todo
-  volumes 
 
-  ports:
-      "5442:5442"
-  backend:
-  build: /backend
-  restart: always
-  ports: 
-  "5000:5000"
-environment
 
 
