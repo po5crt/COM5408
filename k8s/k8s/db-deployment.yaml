@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: database
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: database
@@ -12,13 +12,22 @@ spec:
       labels:
         app: database
     spec:
-      containers:
-        - name: mysql
-          image: mysql:8
+    containers:
+        - name: postgres
+          image: postgres:18-alpine
           ports:
-            - containerPort: 3306
+            - containerPort: 5432
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
-            - name: MYSQL_DATABASE
-              value: appdb
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: Bolton26
+            - name: POSTGRES_DB
+              value: todo
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+    volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata
