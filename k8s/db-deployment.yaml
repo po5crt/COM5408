@@ -2,32 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database
+
 spec:
-  replicas: 2
+  replicas: 3
+
   selector:
     matchLabels:
       app: database
+
   template:
     metadata:
       labels:
         app: database
+
     spec:
-    containers:
+      containers:
         - name: postgres
-          image: postgres:18-alpine
+          image: postgres:18-aphine
+
           ports:
             - containerPort: 5432
+
           env:
             - name: POSTGRES_USER
               value: postgres
+
             - name: POSTGRES_PASSWORD
-              value: Bolton26
+              DB_PASSWORD: Bolton26
+
             - name: POSTGRES_DB
               value: todo
+
           volumeMounts:
             - name: pgdata
               mountPath: /var/lib/postgresql/data
-    volumes:
+              
+      volumes:
         - name: pgdata
           persistentVolumeClaim:
             claimName: pgdata

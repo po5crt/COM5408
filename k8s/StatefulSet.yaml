@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: postgres-sql
+
+spec:
+  serviceName: database
+
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: postgres-sql
+
+  template:
+    metadata:
+      labels:
+        app: postgres-sql
+
+    spec:
+      containers:
+        - name: postgres-sql
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+
+          env: 
+            - name: POSTGRES_PASSWORD
+              value: Bolton26
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_DB
+              value: appdb
+
+          
+ 

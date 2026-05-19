@@ -3,30 +3,51 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: backend
+
   template:
     metadata:
       labels:
         app: backend
+
     spec:
-    containers:
+      containers:
         - name: backend
-          image: backend:latest   
+          image: backend:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
+
           env:
             - name: DB_HOST
               value: database
+
             - name: DB_USER
-              value: postgres
+
+              valueFrom:
+              securetKeyref:
+                name: postgres-secret
+                securetKeyref: POSTGRES_USER
+
             - name: DB_PASSWORD
+              valueFrom:
+              securetKeyref:
+                name: postgres-secret
+                securetKeyref: POSTGRES_USER
               value: Bolton26
+
             - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
               value: todo
+
             - name: DB_PORT
               value: "5432"
+
             - name: PORT
               value: "5000"

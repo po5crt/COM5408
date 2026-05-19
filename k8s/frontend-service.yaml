@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata:
   name: frontend
@@ -8,4 +8,5 @@ spec:
   ports:
     - port: 3000
       targetPort: 3000
-  type: ClusterIP
+      nodeport: 30000
+  type: NodePort
