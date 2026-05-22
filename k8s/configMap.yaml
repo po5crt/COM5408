@@ -1,8 +1,0 @@
-apiVersion: apps/v1
-kind: ConfigMap
-metadata:
-  name: app-config
-data:
-  APP_NAME: myapp
-  LOG_LEVEL: debug
-  database_url: postgres://db:5432/app
