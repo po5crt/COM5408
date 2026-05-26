@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-ddeployment
+  name: db-deployment
 
 spec:
   replicas: 1
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:14-alpine
+          image: postgres:16-alpine
           ports:
             - containerPort: 5432
           env:
@@ -33,19 +33,19 @@ spec:
                 secretKeyRef:
                   name: db-secret
                   key: POSTGRES_PASSWORD
-            - name: POSTGRES-DB 
+            - name: POSTGRES_DB 
               value: "todo"
 
           volumeMounts:
-              - mountPath: /var/lib/postgresql/data
+              - mountPath: /var/lib/postgresql
                 name: db-storage 
-              - mountPath: /Docker-entrypoint-initdb.d/im=nit.sql
+              - mountPath: /Docker-entrypoint-initdb.d/
                 name: db-init-script-valume
                 subPath: init.sql
       volumes:
           - name: db-storage
             persistentVolumeClaim:
-              claimName: db-pvc
+              claimName: todoapp-postgres-pvc
           - name: db-init-script-valume
             configMap:
               name: db-init-script-configmap
