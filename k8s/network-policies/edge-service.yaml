@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-server
+
+
+spec:
+  replicas: 1
+
+
+  selector:
+    matchLabels:
+      app: edge-server
+
+
+  template:
+    metadata:
+      labels:
+        app: edge-server
+
+
+    spec:
+      containers:
+      - name: inginx
+        image: inginx:1-25 alpine
+        ports:
+        - containerPort: 80
+
+        
+
+
+
+
