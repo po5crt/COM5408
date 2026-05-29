@@ -3,6 +3,7 @@ kind: NetworkPolicy
 metadata:
   name: allow-ingress-to-web
   namespace: production
+  
 spec:
   podSelector:
     matchLabels:

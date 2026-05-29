@@ -3,6 +3,7 @@ kind: NetworkPolicy
 metadata:
   name: allow-dns
   namespace: production
+  
 spec:
   podSelector: {}
 
