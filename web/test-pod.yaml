@@ -5,7 +5,7 @@ metadata:
 spec:
   serviceAccountName: app-viewer-sa
   containers:
-    - name: alpine
-      image: alpine
-      command: ["sleep", "3600"]
+  - name: alpine
+    image: alpine
+    command: ["sleep", "3600"]
   
