@@ -21,8 +21,8 @@ spec:
 
     spec:
       containers:
-      - name: inginx
-        image: inginx:1-25 alpine
+      - name: nginx
+        image: nginx:1.25-alpine
         ports:
         - containerPort: 80
 
